@@ -1,0 +1,91 @@
+/* 
+	Based on Chrome de la chrome table styles
+	written by Chris Heilmann http://wait-till-i.com
+*/
+
+body {
+	font-family: arial, helvetica, sans-serif
+}
+
+.infowindow {
+	font-size: 12px;
+}
+
+.fineprint {
+	font-size: 10px;
+}
+
+div#config_area, div#url_area {
+	display: none;
+}
+
+table,th,td{
+	border:1px solid #666;
+	border-collapse:collapse;
+}
+
+table.transparent_table, th.transparent_table, td.transparent_table  {
+	border:0px solid #FFF;
+	border-collapse:collapse;
+	padding:0px 0px 0px 0px;
+	background:#fff;
+}
+
+th.column { text-align: right }
+table{
+	border:none;
+	border-top:1px solid #000;
+}
+thead th{
+	background:url(greychrome.gif) top left repeat-x #fff;
+	padding:5px 10px;
+	font-size:90%;
+	text-transform:uppercase;
+	color:#333;
+}
+tbody td,tbody th{
+	font-size:85%;
+	padding:5px 10px;
+	background:#eee;
+}
+
+
+tbody th{
+	/*background:url(bluechrome.gif) top left repeat-x #fff;*/
+	color:#333;
+}
+tbody tr.odd td{
+	background:#ddd;
+}
+tbody tr.odd th{
+	background:url(greenchrome.gif) top left repeat-x #fff;
+	color:#333;
+}
+tfoot td,tfoot th{
+	border:none;
+	padding-top:10px;
+}
+caption{
+	text-align:left;
+	text-transform:uppercase;
+	font-size:130%;
+	padding:10px 0;
+	color:#036;
+}
+table a:link{
+	color:#369;
+}
+table a:visited{
+	color:#036;
+}
+table a:hover{
+	color:#000;
+	text-decoration:none;
+}
+table a:active{
+	color:#000;
+}
+
+img.field_help {
+	vertical-align: bottom;
+}

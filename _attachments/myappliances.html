@@ -1,0 +1,109 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Transit Appliance Configuration</title>
+	<script src="vendor/couchapp/loader.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.7.custom.css"  />	
+	<link rel="stylesheet" type="text/css" href="css/configuration.css" />
+	<link rel="stylesheet" type="text/css" href="css/JQuerySpinBtn.css" />
+	<!--script type="text/javascript" src="js/jquery-1.4.4.min.js"></script-->
+	<script type="text/javascript" src="js/jquery-ui-1.8.7.custom.min.js"></script>
+	<script type="text/javascript">
+		var trApp = {}; // initialize our name space
+		jQuery(document).ready(function() {
+			if (getParameterByName( 'debug' ) > 0 ) {
+				$("#debug_panel").css('display', 'block');
+			}
+		});
+	</script>
+	<script type="text/javascript" src="js/jquery.populate.js"></script>	
+	<script type="text/javascript" src="js/jquery.form.js"></script>
+	<script type="text/javascript" src="js/json2.js"></script>
+	<script type="text/javascript" src="js/template.js"></script>
+	<script type="text/javascript" src="js/JQuerySpinBtn.js"></script>
+	<script type="text/javascript" src="js/trApplicationCache.js"></script>
+	<script type="text/javascript" src="js/trAppUtilities.js"></script>
+	<script type="text/javascript" src="js/trAppController.js"></script>
+	<script type="text/javascript" src="js/trAppStopManagement.js"></script>
+	<script type="text/javascript" src="js/trAppStorage.js"></script>
+	<script type="text/javascript" src="js/trAppCreationDisplay.js"></script>
+	<script type="text/javascript" src="js/trAppRegistration.js"></script>
+	<script type="text/javascript" src="js/trAppApplication.js"></script>
+	<script type="text/javascript" src="js/trAppStopCache.js"></script>
+	<script type="text/javascript" src="js/trAppInitialize.js"></script>
+
+
+
+
+</head>
+<body>
+	<div id="accordion">
+		<div>
+			<h3 id="title_tab"><div style='text-align: center; font-size: 36px'> <br>Transit Appliance Display Configuration<br>&nbsp;</div></h3>
+			<div></div>
+		</div>
+		<div>
+			<h3 id="tab0"><a href="#">Your Transit Appliance Displays</a></h3>
+			<div id="main_content"></div>
+		</div>
+		<div>
+			<h3 id="tab1"><a href="#">1. Add a New Display</a></h3>
+			<div id="fold1"></div>
+		</div>
+		<div>
+			<h3 id="tab2"><a href="#">2. Register the Display</a></h3>
+			<div id="fold2"></div>
+		</div>
+		<div>
+			<h3 id="tab3"><a href="#">3. Transit Stops and Lines</a></h3>
+			<div id="fold3"></div>
+		</div>
+		<div>
+			<h3 id="tab4"><a href="#">4. Pick a Display Application</a></h3>
+			<div id="fold4"></div>
+		</div>
+		<div>
+			<h3 id="tab5"><a href="#">5. Choose Display Options</a></h3>
+			<div id="fold5"></div>
+		</div>
+		<div>
+			<h3 id="tab6"><a href="#">6. Try the Configuration</a></h3>
+			<div id="fold6"></div>
+		  <textarea id="template6" style="display:none;">
+		  	<table class='transparent_table'>
+					<tr valign="top">
+						<td class="transparent_table" width="50%">
+							<form>
+								<table>
+									<tbody>
+										<tr><th>Your Appliance Display URL</th></tr>
+										<tr><td><a target="_blank" href="${url}">${url}</a></td></tr>
+										<tr><td>You may bookmark this URL. If you assigned a hardware ID to this configuration, then we are also storing this for you to be retrieved when your hardware appliance starts up.</td></tr>
+									</tbody>
+								</table>
+							</form>
+						</td>
+						<td class="transparent_table">&nbsp;&nbsp;</td>
+						<td class="transparent_table" width="45%">
+							<h4>Nickname: ${nickname}</h4><form onsubmit="trAppActivateTab(1);return false;"><input src="images/create_another.png" type="image"></form>
+						</td>
+					</tr>
+				</table>
+		  </textarea>
+		</div>
+		<div>
+			<h3 id="tab8"><a href="#">Log out</a></h3>
+			<div id="fold8">
+				<p>
+					<a href="javascript:$.couch.logout({success: function() {window.location.href = 'index.html'}});">Log out</a>
+				</p>
+			</div>
+		</div>
+		<div  id='debug_panel' style="display:none;">
+			<h3 id="tab7"><a href="#">Dump of current configuration</a></h3>
+			<div id="fold7"></div>
+		</div>
+	</div>
+
+</body>
+</html>
