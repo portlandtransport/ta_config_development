@@ -12,6 +12,10 @@ function trAppDisplayMyAppliances() {
 	  url: "http://transitappliance.couchone.com/"+trApp.dbname+"/_design/"+trApp.dbname+"/_view/author?key=%22"+trApp.author+"%22",
 	  success: function(data) {
 	    if (data.rows.length > 0) {
+	    	// sort by nickname
+				data.rows.sort(function(a, b) {		
+				    return a.value.private.nickname < b.value.private.nickname ? -1 : (a.value.private.nickname > b.value.private.nickname ? 1 : 0);
+				});
 	    	// table of existing configs
 	    	return_html += "<table border='1' class='transparent_table'><tr valign='top'><td class='transparent_table'><table><tr><th>Appliance</th><th>Street Address</th></tr>\n";
 	    	$(data.rows).each(function(index,return_data) {
