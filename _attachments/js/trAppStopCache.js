@@ -43,7 +43,7 @@ function trAppStopCache() {
 		
 		var is_development = false;
 		var stops_db = "transit_stops_production";
-		if (location.href.match(/development/) {
+		if (location.href.match(/development/)) {
 			var stops_db = "transit_stops_loading";
 			is_development = true;
 		}
