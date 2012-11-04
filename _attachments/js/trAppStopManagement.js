@@ -103,9 +103,11 @@ function trAppUpdateStopList() {
 				
 				// build route list
 				var stop_routes = {};
+				var stop_directions = {};
 				for (var i = 0; i < stop_data.routes.length; i++){ 
 			    var route = stop_data.routes[i];
 			    stop_routes[route.route_id] = route.route_long_name;
+			    stop_directions[route.route_id] = route.direction_id;
 			    if (route.route_short_name != "") {
 			    	stop_routes[route.route_id] = route.route_short_name+" "+stop_routes[route.route_id]; // this may be a TriMet-ism!
 			    }
@@ -113,7 +115,7 @@ function trAppUpdateStopList() {
 
 				for (var route_id in trApp.current_appliance['public']['stops'][agency][stop_id]) {
 					if (trApp.current_appliance['public']['stops'][agency][stop_id][route_id] && stop_routes[route_id]) {
-						stop_list += "&nbsp;&nbsp;"+stop_routes[route_id]+"<br>";
+						stop_list += "&nbsp;&nbsp;"+stop_routes[route_id]+"("+stop_directions[route_id]+")<br>";
 					}
 				}
 			}

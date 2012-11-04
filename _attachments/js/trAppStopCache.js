@@ -41,9 +41,11 @@ function trAppStopCache() {
 	
 	this.getCacheItem = function(agency,stop_id,callback) {
 		
+		var is_development = false;
 		var stops_db = "transit_stops_production";
-		if (document.domain.substring(0,3) == 'dev') {
+		if (location.href.match(/development/) {
 			var stops_db = "transit_stops_loading";
+			is_development = true;
 		}
 			
 		
@@ -56,7 +58,7 @@ function trAppStopCache() {
 		stops_db + "/_design/get/_view/by_id?key=%22"+agency+
 		":"+stop_id+"%22";
 
-		if (Math.random() > 0.5) {
+		if (Math.random() > 0.5 && !is_development) {
 			service_url = alternate_url;
 		}
 
