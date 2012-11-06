@@ -213,7 +213,7 @@ function trAppGenerateStopForm(stop_data) {
 
 function trAppUpdateRouteState(agency, stop_id, route_id) {
 	var element_id = agency+"-"+stop_id+"-"+route_id;
-	trApp.current_appliance['public']['stops'][agency][stop_id][route_id] = $('#'+element_id).attr('checked');
+	trApp.current_appliance['public']['stops'][agency][stop_id][route_id] = $('#'+element_id).is(":checked");
 	trApp.save_flags.public = true;
 	trAppAdjustStopMarkerIconState(agency,stop_id);
 	trAppUpdateStopList();
