@@ -116,9 +116,9 @@ function trAppUpdateStopList() {
 				for (var route_id in trApp.current_appliance['public']['stops'][agency][stop_id]) {
 					if (trApp.current_appliance['public']['stops'][agency][stop_id][route_id] && stop_routes[route_id]) {
 						if (stop_directions[route_id] == 0) {
-							stop_list += "&nbsp;&nbsp;"+stop_routes[route_id]+"(&larr;)<br>";
+							stop_list += "&nbsp;&nbsp;&lArr;&nbsp;"+stop_routes[route_id]+"<br>";
 						} else {
-							stop_list += "&nbsp;&nbsp;"+stop_routes[route_id]+"(&rarr;)<br>";
+							stop_list += "&nbsp;&nbsp;"+stop_routes[route_id]+"&nbsp;&rArr;<br>";
 						}
 					}
 				}
