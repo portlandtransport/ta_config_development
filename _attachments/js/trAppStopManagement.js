@@ -90,15 +90,22 @@ function trAppUpdateStopString() {
 	
 
 function trAppUpdateStopList() {
+	
+	var stop_listings = [];
 
 	var stop_list = "";
 	for (var agency in trApp.current_appliance['public']['stops']) {
 		for (var stop_id in trApp.current_appliance['public']['stops'][agency]) {
+
 			var stop_data = trApp.stop_cache.stopData(agency,stop_id);
 			if (stop_data == undefined) {
 				trApp.stop_cache.getCacheItem(agency,stop_id,trAppUpdateStopList);
 			} else {
-				stop_list += "<b>"+stop_data.stop_name+" ("+stop_id+")</b><br>";
+				// compute distance
+				var stop_distance = trAppStopDistance(stop_data);
+				var stop_list_text = "";
+
+				stop_list_text += "<b>"+stop_data.stop_name+" ("+stop_id+") "+Math.ceil(stop_distance)+" ft</b><br>";
 				//stop_list += "<PRE>"+dump(stop_data)+"</PRE>";
 				
 				// build route list
@@ -116,16 +123,59 @@ function trAppUpdateStopList() {
 				for (var route_id in trApp.current_appliance['public']['stops'][agency][stop_id]) {
 					if (trApp.current_appliance['public']['stops'][agency][stop_id][route_id] && stop_routes[route_id]) {
 						if (stop_directions[route_id] == 0) {
-							stop_list += "&nbsp;&nbsp;&lArr;&nbsp;"+stop_routes[route_id]+"<br>";
+							stop_list_text += "&nbsp;&nbsp;&lArr;&nbsp;"+stop_routes[route_id]+"<br>";
 						} else {
-							stop_list += "&nbsp;&nbsp;"+stop_routes[route_id]+"&nbsp;&rArr;<br>";
+							stop_list_text += "&nbsp;&nbsp;"+stop_routes[route_id]+"&nbsp;&rArr;<br>";
 						}
 					}
 				}
+				stop_listings.push({text: stop_list_text, distance: stop_distance});
 			}
 		}
 	}
+	
+	stop_listings.sort(function(a, b) {
+	    a = a.distance;
+	    b = b.distance;
+	
+	    return a < b ? -1 : (a > b ? 1 : 0);
+	});
+	
+	for (var i = 0; i < stop_listings.length; i++) {
+		stop_list += stop_listings[i].text;
+	}
+	
 	$("#selected_stops").html(stop_list);
+}
+
+function trAppStopDistance(stop_data) {
+
+	var R = 3959 * 5280; // mi (6371 km)     		
+	
+	var lng1 = 	trApp.current_appliance.private.lng * (Math.PI/180);
+	var lat1 = 	trApp.current_appliance.private.lat * (Math.PI/180);
+			
+	var lng2 = stop_data.stop_lon * (Math.PI/180);
+	var lat2 = stop_data.stop_lat * (Math.PI/180);
+	
+	//debug_alert(stop_data);
+	//debug_alert([lng1, lat1, lng2, lat2]);
+	
+	/*	
+	var x = (lng2-lng1) * Math.cos((lat1+lat2)/2);
+	var y = (lat2-lat1);
+	var d = Math.sqrt(x*x + y*y) * R;
+	*/
+
+	
+	var dLat = (lat2-lat1);
+	var dLng = (lng2-lng1);
+	
+	var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+	        Math.sin(dLng/2) * Math.sin(dLng/2) * Math.cos(lat1) * Math.cos(lat2); 
+	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+	return R * c;
+					
 }
 
 function trAppTestStopsConfigured() {
