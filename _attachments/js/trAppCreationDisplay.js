@@ -33,9 +33,9 @@ function trAppDisplayMyAppliances() {
 			    	// delete the appliance, user apparently aborted before minimum config
 			    	//trAppDeletePrivateApplianceConfig(return_data._docId,true)
 			    } else {
-				    if (hw_id != "") {
-				    	address += "<br><span class='fineprint'>Hardware: "+hw_id+"</span>";
-				    }
+				    //if (hw_id != "") {
+				    	address += "<br><span class='fineprint'>"+return_data.value.private.id+"</span>";
+				    //}
 				    var nickname = return_data.value.private.nickname;
 				    if (nickname == undefined) {
 				    	nickname = "[not yet named]";
