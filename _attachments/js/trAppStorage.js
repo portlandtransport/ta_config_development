@@ -19,12 +19,21 @@
 
 function trAppCreateAppliance(appliance_id) {
 	// re-initialize state to create a new configuration
-	trApp.current_appliance.private = {}; // all data is public now
-	trApp.current_appliance.public = {}; // public configuration elements, available to anyone who presents id
-	trApp.current_appliance.private.id = appliance_id;
-	trApp.current_appliance.public.id = appliance_id;
-	trApp.current_appliance.public.stops = {};
-	trApp.current_appliance.public.stop_cache = {};
+	if (trApp.clone_appliance) {
+		trApp.current_appliance = trApp.clone_appliance;
+		trApp.current_appliance.private.id = appliance_id;
+		trApp.current_appliance.public.id = appliance_id;
+		trApp.current_appliance.private.nickname = "";
+		trApp.current_appliance["_id"] = trApp.current_appliance.private.id;
+		delete trApp.current_appliance["_rev"];
+	} else {
+		trApp.current_appliance.private = {}; // all data is public now
+		trApp.current_appliance.public = {}; // public configuration elements, available to anyone who presents id
+		trApp.current_appliance.private.id = appliance_id;
+		trApp.current_appliance.public.id = appliance_id;
+		trApp.current_appliance.public.stops = {};
+		trApp.current_appliance.public.stop_cache = {};
+	}
 	
 	// private piece
 	trAppStoreConfiguration();
@@ -59,6 +68,23 @@ function trAppLoadApplianceConfig(id) {
   	async: false,
 	  success: function(data) {
 				trApp.current_appliance = data;
+	  },
+	  error: function(XMLHttpRequest, textStatus, errorThrown) {
+	  	alert('Error: could not find appliance configuration.');
+		},
+	  dataType: "json"
+	});
+}
+
+function trAppCloneApplianceConfig(id) {
+	// query for it
+	var query_url = "http://transitappliance.couchone.com/"+trApp.dbname+"/"+id;
+	$.ajax({
+	  url: query_url,
+  	async: false,
+	  success: function(data) {
+				trApp.clone_appliance = data;
+				trAppActivateTab(1);
 	  },
 	  error: function(XMLHttpRequest, textStatus, errorThrown) {
 	  	alert('Error: could not find appliance configuration.');
