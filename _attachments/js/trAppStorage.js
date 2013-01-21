@@ -55,8 +55,80 @@ function trAppStoreConfiguration() {
 	trApp.current_appliance["author"] = trApp.author;
 	trApp.current_appliance["created_at"] = (new Date()).toJSON();
 	
+	// create URL
+  if (trApp.current_appliance.public.application != undefined && trApp.current_appliance.public.application.id != undefined) {
+ 		var application_data = trApp.applications.applicationData(trApp.current_appliance.public.application.id);
+ 		trAppFormatURLs(application_data,trApp.current_appliance)
+  }
+	
 	var $db = $.couch.db(trApp.dbname);
 	$db.saveDoc(trApp.current_appliance, {});
+	
+}
+
+function trAppFormatURLs(application,config) {
+				
+	if (config.public.stops != undefined && config.public.application != undefined && config.public.application.id != undefined && config.public.application.options != undefined) {
+		// populate all the config values we will need
+		
+		if (config.public.timezone == undefined) {
+			config.public.timezone = "America/Los_Angeles";
+		}
+  				  	
+		var option_name_value_pair_array = new Array();
+		var fully_qualified_option_name_value_pair_array = new Array();
+		if (config.public.application.options == undefined) {
+			config.public.application.options = [];
+		}
+		for (var i = 0; i < config.public.application.options.length; i++){ 
+	  	var option = config.public.application.options[i]; 
+	  	option_name_value_pair_array.push(option.name+"="+option.value);
+	  	fully_qualified_option_name_value_pair_array.push("option["+option.name+"]="+option.value);
+		} 
+		
+  	option_name_value_pair_array.push("lat="+config.private.lat);
+  	fully_qualified_option_name_value_pair_array.push("option[lat]="+config.private.lat);
+  	
+  	option_name_value_pair_array.push("lng="+config.private.lng);
+  	fully_qualified_option_name_value_pair_array.push("option[lng]="+config.private.lng);
+	  	
+		config.public.application.simple_option_string = option_name_value_pair_array.join('&')+"";
+		config.public.application.fully_qualified_option_string = fully_qualified_option_name_value_pair_array.join('&')+"";
+		
+		var multi_agency_stop_array = new Array();
+		for (var agency in config.public.stops) {
+			for (var stop_id in config.public.stops[agency]) {
+				var all_true = true;
+				for (var route_id in config.public.stops[agency][stop_id]) {
+					all_true = all_true && config.public.stops[agency][stop_id][route_id];
+				}
+				if (all_true) {
+					multi_agency_stop_array.push("stop["+agency+"]["+stop_id+"]=*");
+				} else {
+					for (var route_id in config.public.stops[agency][stop_id]) {
+						if (config.public.stops[agency][stop_id][route_id]) {
+							multi_agency_stop_array.push("stop["+agency+"]["+stop_id+"]="+route_id);
+						}
+					}
+				}
+			}
+		}
+		config.public.multi_agency_stop_string = multi_agency_stop_array.join("&");
+		
+		
+		var expanded = [];
+		
+		for (var i = 0; i < application.templates.length; i++){ 
+	  	var app_template = application.templates[i].app_url;
+	  	var img_template = application.templates[i].img_url;
+	  	var app_url = app_template.process(config.public);
+	  	var img_url = img_template.process(config.public);
+	  	expanded.push( { "app_url": app_url, "img_url": img_url } );
+		} 
+		
+		config.external_configuration = {"url": expanded[0].app_url, "urls": expanded};
+
+	}
 	
 }
 
