@@ -20,7 +20,7 @@ function trAppDisplayMyAppliances() {
 	    	return_html += "<table border='1' class='transparent_table'><tr valign='top'><td class='transparent_table'><table><tr><th>Appliance</th><th>Street Address</th></tr>\n";
 	    	$(data.rows).each(function(index,return_data) {
 	    		var hw_id = trAppHardwareId(return_data.value.private.id);
-	    		var edit_string = "<a href=\"javascript:trAppLoadApplianceConfig('"+return_data.value.private.id+"'); trAppActivateTab( 2 );\">edit</a> | <a href=\"javascript:trAppDeleteApplianceConfig('"+return_data.value._id+"','"+return_data.value._rev+"',false,trAppDisplayMyAppliances);\">delete</a> | <a href=\"javascript:trAppCloneApplianceConfig('"+return_data.value._id+"')\">clone</a>";
+	    		var edit_string = "<a href=\"javascript:trAppLoadApplianceConfig('"+return_data.value.private.id+"'); trAppActivateTab( 2 );\">edit</a> | <a href=\"http://transitappliance.com/cgi-bin/test_by_id.pl?id="+return_data.value.private.id+"\">test</a> | <a href=\"javascript:trAppDeleteApplianceConfig('"+return_data.value._id+"','"+return_data.value._rev+"',false,trAppDisplayMyAppliances);\">delete</a> | <a href=\"javascript:trAppCloneApplianceConfig('"+return_data.value._id+"')\">clone</a>";
 	    		//trAppLoadApplianceConfig(return_data.id)
 	    		//var url = trAppBuildURL();
 	    		//if (url != undefined && url != "") {
