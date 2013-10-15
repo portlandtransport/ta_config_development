@@ -308,9 +308,9 @@ function trAppLoadStops() {
 	var sw = map_bounds.getSouthWest();
 	var bbox = sw.lng()+","+sw.lat()+","+ne.lng()+","+ne.lat();
 	var service_url = "http://developer.trimet.org/ws/V1/stops?bbox="+bbox+"&showRoutes=true&appID=828B87D6ABC0A9DF142696F76&json=true";
-	var service_url = "http://transitappliance.couchone.com/transit_stops_production/_design/geo/_spatial/points?bbox="+bbox;
+	var service_url = "http://transitappliance.iriscouch.com/transit_stops_production/_design/geo/_spatial/points?bbox="+bbox;
 	if (location.href.match(/development/)) {
-		var service_url = "http://transitappliance.couchone.com/transit_stops_loading/_design/geo/_spatial/points?bbox="+bbox;
+		var service_url = "http://transitappliance.iriscouch.com/transit_stops_loading/_design/geo/_spatial/points?bbox="+bbox;
 	}
 	$.ajax({
     type: "GET",
