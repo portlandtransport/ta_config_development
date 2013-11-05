@@ -312,6 +312,7 @@ function trAppLoadStops() {
 	if (location.href.match(/development/)) {
 		var service_url = "http://transitappliance.iriscouch.com/transit_stops_loading/_design/geo/_spatial/points?bbox="+bbox;
 	}
+	var service_url = "http://transitappliance.iriscouch.com/transit_stops_loading/_design/get/_view/by_lon?startkey="+sw.lng()+"&endkey="+ne.lng();
 	$.ajax({
     type: "GET",
 		url: service_url,
@@ -324,7 +325,13 @@ function trAppLoadStops() {
 
 			for ( var i=0, len=arLen; i<len; ++i ){
 			
-			  var stop = data.rows[i].value.doc;
+			  //var stop = data.rows[i].value.doc;
+			  var stop = data.rows[i].value;
+			  
+			  if (stop.routes == undefined || stop.lat < sw.lat || stop.lat > ne.lat) {
+			  	// filter out things outside the bounding box
+			  	continue;
+			  }
 			  
 			  if (stop.routes.length == 0 && trAppCountStopRoutes(stop.agency,stop.stop_id) == 0) {
 			  	continue;
