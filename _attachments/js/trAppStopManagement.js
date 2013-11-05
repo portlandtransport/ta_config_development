@@ -309,10 +309,12 @@ function trAppLoadStops() {
 	var bbox = sw.lng()+","+sw.lat()+","+ne.lng()+","+ne.lat();
 	var service_url = "http://developer.trimet.org/ws/V1/stops?bbox="+bbox+"&showRoutes=true&appID=828B87D6ABC0A9DF142696F76&json=true";
 	var service_url = "http://transitappliance.iriscouch.com/transit_stops_production/_design/geo/_spatial/points?bbox="+bbox;
+	var service_url = "http://transitappliance.iriscouch.com/transit_stops_production/_design/get/_view/by_lon?startkey="+sw.lng()+"&endkey="+ne.lng();
 	if (location.href.match(/development/)) {
 		var service_url = "http://transitappliance.iriscouch.com/transit_stops_loading/_design/geo/_spatial/points?bbox="+bbox;
+		var service_url = "http://transitappliance.iriscouch.com/transit_stops_loading/_design/get/_view/by_lon?startkey="+sw.lng()+"&endkey="+ne.lng();
 	}
-	var service_url = "http://transitappliance.iriscouch.com/transit_stops_loading/_design/get/_view/by_lon?startkey="+sw.lng()+"&endkey="+ne.lng();
+	
 	$.ajax({
     type: "GET",
 		url: service_url,
@@ -328,7 +330,7 @@ function trAppLoadStops() {
 			  //var stop = data.rows[i].value.doc;
 			  var stop = data.rows[i].value;
 			  
-			  if (stop.routes == undefined || stop.lat < sw.lat || stop.lat > ne.lat) {
+			  if (stop.lat < sw.lat || stop.lat > ne.lat) {
 			  	// filter out things outside the bounding box
 			  	continue;
 			  }
