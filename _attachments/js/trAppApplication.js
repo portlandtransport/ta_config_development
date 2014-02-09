@@ -24,21 +24,23 @@ function trAppSelectApplication() {
 	
 	// need some kind of test for success?
 	
-	var default_app = 'transitboard';
+	var default_app = 'tbdline';
 	var url_templates = {};
 	return_html += "<table class='transparent_table'><tr valign='top'><td class='transparent_table'><form><table><tr><th></th><th>Application</th><th width='300px'>Description</th><th>Systems</th></tr>\n";
 	var first = " checked";
 	if (application_ids.length > 0) {
 		for (var i = 0; i < application_ids.length; i++) {
 			var return_data = trApp.applications.applicationData(application_ids[i]);
-  		if (default_app == undefined) {
-  			default_app = return_data.application_id; // first application is default
-  		}
-  		url_templates[return_data.application_id] = escape(return_data.url_template);
-  		var agencies = return_data.agencies.join(", ");
-  		var select_href = "javascript:trAppSetApplication('"+return_data.application_id+"')";
-	    return_html += "<tr valign='top'><td><input type='radio' name='application_id' value='"+return_data.application_id+"'"+first+" onclick=\"trAppSetApplication('"+return_data.application_id+"')\"></td><td><a href=\""+select_href+"\"><img border='2' src='images/"+return_data.application_id+".jpg'/></a></td><td><a href=\""+select_href+"\">"+return_data.title+"</a><p>"+return_data.description+"</p></td><td>"+agencies+"</td></tr>";
-	  	first = "";
+			if (!return_data.hidden) {	
+	  		if (default_app == undefined) {
+	  			default_app = return_data.application_id; // first application is default
+	  		}
+	  		url_templates[return_data.application_id] = escape(return_data.url_template);
+	  		var agencies = return_data.agencies.join(", ");
+	  		var select_href = "javascript:trAppSetApplication('"+return_data.application_id+"')";
+		    return_html += "<tr valign='top'><td><input type='radio' name='application_id' value='"+return_data.application_id+"'"+first+" onclick=\"trAppSetApplication('"+return_data.application_id+"')\"></td><td><a href=\""+select_href+"\"><img border='2' src='images/"+return_data.application_id+".jpg'/></a></td><td><a href=\""+select_href+"\">"+return_data.title+"</a><p>"+return_data.description+"</p></td><td>"+agencies+"</td></tr>";
+		  	first = "";
+		  }
 		}
 		return_html += "</table></form></td><td class='transparent_table'>&nbsp;&nbsp;</td><td class='transparent_table'><h4>Nickname: "+trApp.current_appliance.private.nickname+"</h4><form onsubmit='trAppActivateTab(5);return false;'><input type='image' src='images/next.png'></form></td></tr></table>\n";
 
