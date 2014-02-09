@@ -20,7 +20,7 @@ function trAppDisplayMyAppliances() {
 	    	return_html += "<table border='1' class='transparent_table'><tr valign='top'><td class='transparent_table'><table><tr><th>Appliance</th><th>Street Address</th></tr>\n";
 	    	$(data.rows).each(function(index,return_data) {
 	    		var hw_id = trAppHardwareId(return_data.value.private.id);
-	    		var edit_string = "<a href=\"javascript:trAppLoadApplianceConfig('"+return_data.value.private.id+"'); trAppActivateTab( 2 );\">edit</a> | <a target=\"_blank\" href=\"http://transitappliance.com/cgi-bin/test_by_id.pl?id="+return_data.value.private.id+"\">test</a> | <a href=\"javascript:trAppDeleteApplianceConfig('"+return_data.value._id+"','"+return_data.value._rev+"',false,trAppDisplayMyAppliances);\">delete</a> | <a href=\"javascript:trAppCloneApplianceConfig('"+return_data.value._id+"')\">clone</a>";
+	    		var edit_string = "<a href=\"javascript:trAppLoadApplianceConfig('"+return_data.value.private.id+"'); trAppActivateTab( 2 );\">edit</a> | <a target=\"_blank\" href=\"http://transitappliance.com/cgi-bin/test_by_id.pl?id="+return_data.value.private.id+"\">test</a> | <a href=\"javascript:trAppDeleteApplianceConfig('"+return_data.value._id+"','"+return_data.value._rev+"',false,trAppDisplayMyAppliances);\">delete</a> | <a href=\"javascript:trAppCloneApplianceConfig('"+return_data.value._id+"')\">clone</a> | <a href=\"javascript:trAppReset('"+return_data.value._id+"')\">reset</a>";
 	    		//trAppLoadApplianceConfig(return_data.id)
 	    		//var url = trAppBuildURL();
 	    		//if (url != undefined && url != "") {
@@ -94,4 +94,25 @@ function trAppHardwareId(id) {
 	} else {
 		return "";
 	}
+}
+
+function trAppReset(id) {
+	// set SQS queue entry to trigger reset of running display
+
+	jQuery.ajax({
+		url: "http://transitappliance.com/cgi-bin/create_reset.pl",
+		dataType: "jsonp",
+		data: {"id": id},
+		success: function(data) {
+			if (data.status == "ok") {
+				alert("Reset request has been queued for "+id);
+			} else {
+				alert("Could not queue reset request");
+			}
+		},
+		error: function(data) {
+			alert("Could not queue reset request");
+		}
+	});
+	
 }
