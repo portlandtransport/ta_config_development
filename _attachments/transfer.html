@@ -45,7 +45,7 @@
 	  		// validate user
 	  		var user_name = jQuery("#transfer #user").val();
 				jQuery.ajax({
-				  url: "http://transitappliance.couchone.com/_users/org.couchdb.user:"+user_name,
+				  url: "http://transitappliance.iriscouch.com/_users/org.couchdb.user:"+user_name,
 				  success: function(data) {
 						validate_config(user_name);
 				  },
@@ -59,7 +59,7 @@
 	  	function validate_config(user_name) {
 	  		var dbname = document.location.href.split('/')[3];
 	  		var appl_id = jQuery("#transfer #appl_id").val();
-				var query_url = "http://transitappliance.couchone.com/"+dbname+"/"+appl_id;
+				var query_url = "http://transitappliance.iriscouch.com/"+dbname+"/"+appl_id;
 				$.ajax({
 				  url: query_url,
 				  success: function(data) {
@@ -75,7 +75,7 @@
 	  	
 	  	function update_configuration(data,user_name,appl_id,dbname) {
 	  		data.author = user_name;
-	  		var query_url = "http://transitappliance.couchone.com/"+dbname+"/"+appl_id;
+	  		var query_url = "http://transitappliance.iriscouch.com/"+dbname+"/"+appl_id;
 				$.ajax({
 					type: 'PUT',
 				  url: query_url,

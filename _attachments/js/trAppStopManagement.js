@@ -314,6 +314,7 @@ function trAppLoadStops() {
 		var service_url = "http://transitappliance.iriscouch.com/transit_stops_loading/_design/geo/_spatial/points?bbox="+bbox;
 		var service_url = "http://transitappliance.iriscouch.com/transit_stops_loading/_design/get/_view/by_lon?startkey="+sw.lng()+"&endkey="+ne.lng();
 	}
+	
 	$.ajax({
     type: "GET",
 		url: service_url,
