@@ -50,15 +50,10 @@ function trAppStopCache() {
 			
 		
 		// get the stop info
-		//var service_url = "http://transitappliance.iriscouch.com/"+stops_db+"/"+stop.agency+":"+stop.stop_id;
-		var service_url = "http://transitappliance.iriscouch.com/" + 
-		stops_db + "/_design/get/_view/by_id?key=%22"+agency+
-		":"+stop_id+"%22";
-		var alternate_url = "https://transitappliance.cloudant.com/" + 
-		stops_db + "/_design/get/_view/by_id?key=%22"+agency+
-		":"+stop_id+"%22";
+		var service_url = "http://stops1.transitappliance.com/stop/"+stop.agency+":"+stop.stop_id;
+		var alternate_url = "http://stops2.transitappliance.com/stop/"+stop.agency+":"+stop.stop_id;
 
-		if (Math.random() > 0.5 && !is_development) {
+		if (Math.random() > 0.5) {
 			service_url = alternate_url;
 		}
 
@@ -71,7 +66,7 @@ function trAppStopCache() {
 			success: function(data) {
 				if (data.rows != undefined && data.rows.length == 1) {
 					//debug_alert(data.rows[0].value);
-					trAppStopCache.instance.addToCache(data.rows[0].value.agency,data.rows[0].value.stop_id,data.rows[0].value);
+					trAppStopCache.instance.addToCache(data.agency,data.stop_id,data);
 					//trArrLog("success<br>");
 					callback();
 				} else {
