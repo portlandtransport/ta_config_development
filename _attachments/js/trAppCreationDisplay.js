@@ -9,7 +9,7 @@ function trAppDisplayMyAppliances() {
 	
 	// get all existing configurations (private part)
 	$.ajax({
-	  url: "http://transitappliance.iriscouch.com/"+trApp.dbname+"/_design/"+trApp.dbname+"/_view/author?key=%22"+trApp.author+"%22",
+	  url: "/"+trApp.dbname+"/_design/"+trApp.dbname+"/_view/author?key=%22"+trApp.author+"%22",
 	  success: function(data) {
 	    if (data.rows.length > 0) {
 	    	// sort by nickname

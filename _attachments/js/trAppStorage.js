@@ -134,7 +134,7 @@ function trAppFormatURLs(application,config) {
 
 function trAppLoadApplianceConfig(id) {
 	// query for it
-	var query_url = "http://transitappliance.iriscouch.com/"+trApp.dbname+"/"+id;
+	var query_url = "/"+trApp.dbname+"/"+id;
 	$.ajax({
 	  url: query_url,
   	async: false,
@@ -150,7 +150,7 @@ function trAppLoadApplianceConfig(id) {
 
 function trAppCloneApplianceConfig(id) {
 	// query for it
-	var query_url = "http://transitappliance.iriscouch.com/"+trApp.dbname+"/"+id;
+	var query_url = "/"+trApp.dbname+"/"+id;
 	$.ajax({
 	  url: query_url,
   	async: false,

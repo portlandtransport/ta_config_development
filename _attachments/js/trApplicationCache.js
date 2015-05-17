@@ -36,8 +36,8 @@ function trApplicationCache(callback) {
 	
 	// load all applications
 	$.ajax({
-	  url: "http://transitappliance.iriscouch.com/applications_production/_design/apps/_view/all",
-	  dataType: "jsonp",
+	  url: "/applications_production/_design/apps/_view/all",
+	  dataType: "json",
 	  success: function(data) {
 	  	jQuery.each(data.rows,function(index,row) {
 	  		var application = row.key;

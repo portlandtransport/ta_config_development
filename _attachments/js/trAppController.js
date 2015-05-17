@@ -52,7 +52,7 @@ function trAppController(old_tab,new_tab) {
 			
 			if (hardware_id != undefined && hardware_id != "") {
 				hardware_id = "MAC:"+hardware_id;
-				var query_url = "http://transitappliance.iriscouch.com/"+trApp.dbname+"/"+hardware_id;
+				var query_url = "/"+trApp.dbname+"/"+hardware_id;
 				$.ajax({
 				  url: query_url,
 			  	async: false,
