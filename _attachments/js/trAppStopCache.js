@@ -49,8 +49,10 @@ function trAppStopCache() {
 		}
 		
 		// get the stop info
+
 		var service_url = "http://stops3.transitappliance.com/stop/"+agency+":"+stop_id;
 		var alternate_url = "http://stops2.transitappliance.com/stop/"+agency+":"+stop_id;
+
 
 		if (Math.random() > 0.5) {
 			service_url = alternate_url;
