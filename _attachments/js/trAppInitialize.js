@@ -114,7 +114,7 @@ function trAppLoadMaps() {
 	// load google maps
 	
   var element = document.createElement('script');
-  element.src = 'http://maps.google.com/maps/api/js?sensor=true&callback=trAppMapsLoaded';
+  element.src = '//maps.google.com/maps/api/js?sensor=true&callback=trAppMapsLoaded';
   element.type = 'text/javascript';
   var scripts = document.getElementsByTagName('script')[0];
   scripts.parentNode.insertBefore(element, scripts);

@@ -9,13 +9,31 @@ function trAppDisplayMyAppliances() {
 	
 	// get all existing configurations (private part)
 	$.ajax({
-	  url: "http://transitappliance.iriscouch.com/"+trApp.dbname+"/_design/"+trApp.dbname+"/_view/author?key=%22"+trApp.author+"%22",
+	  url: "/"+trApp.dbname+"/_design/"+trApp.dbname+"/_view/author?key=%22"+trApp.author+"%22",
 	  success: function(data) {
 	    if (data.rows.length > 0) {
 	    	// sort by nickname
-				data.rows.sort(function(a, b) {		
-				    return a.value.private.nickname < b.value.private.nickname ? -1 : (a.value.private.nickname > b.value.private.nickname ? 1 : 0);
-				});
+	    	//console.log(data.rows);
+				data.rows.sort(function(a, b) {	
+					var first;
+					var second;
+					
+					if ( typeof a.value != "undefined" && typeof a.value.private != "undefined" && typeof a.value.private.nickname != "undefined") {
+						first = a.value.private.nickname;
+					} else {
+						first = "";
+					}
+					
+					if ( typeof b.value != "undefined" && typeof b.value.private != "undefined" && typeof b.value.private.nickname != "undefined") {
+						second = b.value.private.nickname;
+					} else {
+						second = "";
+					}
+
+			    if(first < second) return -1;
+			    if(first > second) return 1;
+			    return 0;
+			  });
 	    	// table of existing configs
 	    	return_html += "<table border='1' class='transparent_table'><tr valign='top'><td class='transparent_table'><table><tr><th>Appliance</th><th>Street Address</th></tr>\n";
 	    	$(data.rows).each(function(index,return_data) {
