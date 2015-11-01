@@ -47,11 +47,12 @@ function trAppStopCache() {
 			var stops_db = "transit_stops_loading";
 			is_development = true;
 		}
-			
 		
 		// get the stop info
-		var service_url = "http://stops1.transitappliance.com/stop/"+stop.agency+":"+stop.stop_id;
-		var alternate_url = "http://stops2.transitappliance.com/stop/"+stop.agency+":"+stop.stop_id;
+
+		var service_url = "http://stops3.transitappliance.com/stop/"+agency+":"+stop_id;
+		var alternate_url = "http://stops2.transitappliance.com/stop/"+agency+":"+stop_id;
+
 
 		if (Math.random() > 0.5) {
 			service_url = alternate_url;
@@ -62,9 +63,9 @@ function trAppStopCache() {
 	    type: "GET",
 			url: service_url,
 			timeout: 2000,
-			dataType: "jsonp",
+			dataType: "json",
 			success: function(data) {
-				if (data.rows != undefined && data.rows.length == 1) {
+				if (typeof data !== "undefined") {
 					//debug_alert(data.rows[0].value);
 					trAppStopCache.instance.addToCache(data.agency,data.stop_id,data);
 					//trArrLog("success<br>");

@@ -37,7 +37,7 @@ function trApplicationCache(callback) {
 	// load all applications
 	$.ajax({
 	  url: "/applications_production/_design/apps/_view/all",
-	  dataType: "jsonp",
+	  dataType: "json",
 	  success: function(data) {
 	  	jQuery.each(data.rows,function(index,row) {
 	  		var application = row.key;
