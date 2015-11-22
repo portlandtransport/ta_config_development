@@ -50,13 +50,15 @@ function trAppStopCache() {
 		
 		// get the stop info
 
-		var service_url = "http://stops3.transitappliance.com/stop/"+agency+":"+stop_id;
+		var service_url = "/transit_stops_production/"+agency+":"+stop_id;
+		
+		/*
 		var alternate_url = "http://stops2.transitappliance.com/stop/"+agency+":"+stop_id;
-
 
 		if (Math.random() > 0.5) {
 			service_url = alternate_url;
 		}
+		*/
 
 		//trArrLog("Loading info for "+stop.agency+" stop "+stop.stop_id+"<br>");
 		jQuery.ajax({
